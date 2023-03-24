@@ -1,147 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <title>Document</title>
     <style>
-        *{
-            padding: 0;
-            margin: 0;
-        }
+      * {
+        padding: 0;
+        margin: 0;
+      }
     </style>
-</head>
-<body>
-    
+  </head>
+  <body>
+    <script>
+      var svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", "100%")
+        .attr("height", "100vh");
+      //Sky
+      svg
+        .append("rect")
+        .attr("x", "0")
+        .attr("y", "0")
+        .attr("width", "100%")
+        .attr("height", "500")
+        .attr(
+          "style",
+          " stroke: black; stroke-width: 1px; stroke-opacity: 0; fill: rgba(17, 103, 204, 0.8);"
+        );
+      //Grass
+      svg
+        .append("rect")
+        .attr("x", "0")
+        .attr("y", "500")
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .attr(
+          "style",
+          " stroke: black; stroke-width: 1px; stroke-opacity: 0; fill: rgb(66, 123, 39);"
+        );
+      //Sun
+      svg
+        .append("circle")
+        .attr("cx", "85vw")
+        .attr("cy", "90px")
+        .attr("r", "65")
+        .attr(
+          "style",
+          "stroke: rgb(255, 214, 0); stroke-width:5; fill:rgb(255, 241, 0);"
+        );
 
-<script>
-    var svg = d3.select("body")
-                .append("svg")
-                .attr("width","100%")
-                .attr("height","100vh");
-    //Sky
-     svg.append("rect")
-                .attr("x","0")
-                .attr("y","0")
-                .attr("width","100%").attr("height","58vh")
-                .attr("style"," stroke: black; stroke-width: 1px; stroke-opacity: 0; fill: rgba(17, 103, 204, 0.8);");
-    //Grass
-    svg.append("rect")
-                .attr("x","0")
-                .attr("y","58vh")
-                .attr("width","100%").attr("height","42vh")
-                .attr("style"," stroke: black; stroke-width: 1px; stroke-opacity: 0; fill: rgb(66, 123, 39);");
-    //Sun
-     svg.append("circle")
-                .attr("cx","85vw")
-                .attr("cy","90px")
-                .attr("r","65")
-                .attr("style","stroke: rgb(255, 214, 0); stroke-width:5; fill:rgb(255, 241, 0);");
+      //House
+      svg
+        .append("rect")
+        .attr("x", "620")
+        .attr("y", "370")
+        .attr("width", "260")
+        .attr("height", "210")
+        .attr(
+          "style",
+          " stroke: black; stroke-width: 1px; fill: rgb(137, 74, 20);"
+        );
 
-    //House
-    svg.append("rect")
-                .attr("x","620")
-                .attr("y","270")
-                .attr("width","260").attr("height","210")
-                .attr("style"," stroke: black; stroke-width: 1px; fill: rgb(137, 74, 20);");
-    
-    //Roof
-    svg.append("polygon")
-                .attr("points", "740,140 610,270 890,270")
-                .attr("style"," stroke: black; stroke-width: 1px; fill: rgb(131, 26, 0);");
-    
-    //Door
-    svg.append("rect")
-                .attr("x","730")
-                .attr("y","404")
-                .attr("width","40").attr("height","76")
-                .attr("style"," stroke: black; stroke-width: 2px; fill: rgb(77, 57, 41);");
-    
-    svg.append("line")
-                .attr("x1","750").attr("y1","404")
-                .attr("x2","750").attr("y2","480")
-                .attr("style"," stroke: black; stroke-width: 2px; fill: black;");
-    
-    svg.append("line")
-                .attr("x1","730").attr("y1","430")
-                .attr("x2","770").attr("y2","430")
-                .attr("style"," stroke: black; stroke-width: 2px; fill: black;");
-    
-    svg.append("line")
-                .attr("x1","730").attr("y1","454")
-                .attr("x2","770").attr("y2","454")
-                .attr("style"," stroke: black; stroke-width: 2px; fill: black;");
-    
-    //Windows
-    svg.append("rect")
-                .attr("x","650")
-                .attr("y","404")
-                .attr("width","42").attr("height","40")
-                .attr("style"," stroke: black; stroke-width: 2px; fill: rgb(213, 232, 247);");
+      //Roof
+      svg
+        .append("polygon")
+        .attr("points", "740,240 610,370 890,370")
+        .attr(
+          "style",
+          " stroke: black; stroke-width: 1px; fill: rgb(131, 26, 0);"
+        );
 
-    svg.append("line")
-                .attr("x1","671").attr("y1","404")
-                .attr("x2","671").attr("y2","444")
-                .attr("style"," stroke: black; stroke-width: 1px; fill: black;");
-    
-    svg.append("rect")
-                .attr("x","808")
-                .attr("y","404")
-                .attr("width","42").attr("height","40")
-                .attr("style"," stroke: black; stroke-width: 2px; fill: rgb(213, 232, 247);");
-    
-    svg.append("line")
-                .attr("x1","829").attr("y1","404")
-                .attr("x2","829").attr("y2","444")
-                .attr("style"," stroke: black; stroke-width: 1px; fill: black;");
-    
-    svg.append("rect")
-                .attr("x","650")
-                .attr("y","314")
-                .attr("width","42").attr("height","40")
-                .attr("style"," stroke: black; stroke-width: 2px; fill: rgb(213, 232, 247);");
-    
-    svg.append("line")
-                .attr("x1","671").attr("y1","314")
-                .attr("x2","671").attr("y2","354")
-                .attr("style"," stroke: black; stroke-width: 1px; fill: black;");
+      //Door
+      svg
+        .append("rect")
+        .attr("x", "730")
+        .attr("y", "504")
+        .attr("width", "40")
+        .attr("height", "76")
+        .attr(
+          "style",
+          " stroke: black; stroke-width: 2px; fill: rgb(77, 57, 41);"
+        );
 
-    svg.append("rect")
-                .attr("x","730")
-                .attr("y","314")
-                .attr("width","42").attr("height","40")
-                .attr("style"," stroke: black; stroke-width: 2px; fill: rgb(213, 232, 247);");
+      svg
+        .append("line")
+        .attr("x1", "750")
+        .attr("y1", "504")
+        .attr("x2", "750")
+        .attr("y2", "580")
+        .attr("style", " stroke: black; stroke-width: 2px; fill: black;");
 
-    svg.append("line")
-                .attr("x1","751").attr("y1","314")
-                .attr("x2","751").attr("y2","354")
-                .attr("style"," stroke: black; stroke-width: 1px; fill: black;");
-    
-    svg.append("rect")
-                .attr("x","808")
-                .attr("y","314")
-                .attr("width","42").attr("height","40")
-                .attr("style"," stroke: black; stroke-width: 2px; fill: rgb(213, 232, 247);");
-    
-    svg.append("line")
-                .attr("x1","829").attr("y1","314")
-                .attr("x2","829").attr("y2","354")
-                .attr("style"," stroke: black; stroke-width: 1px; fill: black;");
+      svg
+        .append("line")
+        .attr("x1", "730")
+        .attr("y1", "530")
+        .attr("x2", "770")
+        .attr("y2", "530")
+        .attr("style", " stroke: black; stroke-width: 2px; fill: black;");
 
-    
-    //Clouds
-    svg.append("path").attr("d", "M 60,60 a 28.8,28.8 1 0,0 0,57.6 h 67.2 a 28.8,28.8 1 0,0 0,-57.6 a 14.4, 14.4 1 0,0 -21.6,-14.4 a 14.4,14.4 1 0,0 -50.4,14.4 z").
-    attr("style","stroke: black; stroke-width:2; fill:white;");
+      svg
+        .append("line")
+        .attr("x1", "730")
+        .attr("y1", "554")
+        .attr("x2", "770")
+        .attr("y2", "554")
+        .attr("style", " stroke: black; stroke-width: 2px; fill: black;");
 
-    svg.append("path").attr("d", "M 380,78 a 28.8,28.8 1 0,0 0,57.6 h 67.2 a 28.8,28.8 1 0,0 0,-57.6 a 14.4, 14.4 1 0,0 -21.6,-14.4 a 14.4,14.4 1 0,0 -50.4,14.4 z").
-    attr("style","stroke: black; stroke-width:2; fill:white;");
+      //Windows
+      svg
+        .append("rect")
+        .attr("x", "650")
+        .attr("y", "504")
+        .attr("width", "42")
+        .attr("height", "40")
+        .attr(
+          "style",
+          " stroke: black; stroke-width: 2px; fill: rgb(213, 232, 247);"
+        );
 
-    svg.append("path").attr("d", "M 820, 42 a 30.24,30.24 1 0,0 0,60.48 h 70.56 a 30.24,30.24 1 0,0 0,-60.48 a 15.12, 15.12 1 0,0 -22.68,-15.12 a 15.12,15.12 1 0,0 -52.92,15.12 z").
-    attr("style","stroke: black; stroke-width:2; fill:white;");
-    
-                    
-</script>
-</body>
+      svg
+        .append("line")
+        .attr("x1", "671")
+        .attr("y1", "504")
+        .attr("x2", "671")
+        .attr("y2", "544")
+        .attr("style", " stroke: black; stroke-width: 1px; fill: black;");
+
+      svg
+        .append("rect")
+        .attr("x", "808")
+        .attr("y", "504")
+        .attr("width", "42")
+        .attr("height", "40")
+        .attr(
+          "style",
+          " stroke: black; stroke-width: 2px; fill: rgb(213, 232, 247);"
+        );
+
+      svg
+        .append("line")
+        .attr("x1", "829")
+        .attr("y1", "504")
+        .attr("x2", "829")
+        .attr("y2", "544")
+        .attr("style", " stroke: black; stroke-width: 1px; fill: black;");
+
+      svg
+        .append("rect")
+        .attr("x", "650")
+        .attr("y", "414")
+        .attr("width", "42")
+        .attr("height", "40")
+        .attr(
+          "style",
+          " stroke: black; stroke-width: 2px; fill: rgb(213, 232, 247);"
+        );
+
+      svg
+        .append("line")
+        .attr("x1", "671")
+        .attr("y1", "414")
+        .attr("x2", "671")
+        .attr("y2", "454")
+        .attr("style", " stroke: black; stroke-width: 1px; fill: black;");
+
+      svg
+        .append("rect")
+        .attr("x", "730")
+        .attr("y", "414")
+        .attr("width", "42")
+        .attr("height", "40")
+        .attr(
+          "style",
+          " stroke: black; stroke-width: 2px; fill: rgb(213, 232, 247);"
+        );
+
+      svg
+        .append("line")
+        .attr("x1", "751")
+        .attr("y1", "414")
+        .attr("x2", "751")
+        .attr("y2", "454")
+        .attr("style", " stroke: black; stroke-width: 1px; fill: black;");
+
+      svg
+        .append("rect")
+        .attr("x", "808")
+        .attr("y", "414")
+        .attr("width", "42")
+        .attr("height", "40")
+        .attr(
+          "style",
+          " stroke: black; stroke-width: 2px; fill: rgb(213, 232, 247);"
+        );
+
+      svg
+        .append("line")
+        .attr("x1", "829")
+        .attr("y1", "414")
+        .attr("x2", "829")
+        .attr("y2", "454")
+        .attr("style", " stroke: black; stroke-width: 1px; fill: black;");
+
+      //Clouds
+      svg
+        .append("path")
+        .attr(
+          "d",
+          "M 60,60 a 28.8,28.8 1 0,0 0,57.6 h 67.2 a 28.8,28.8 1 0,0 0,-57.6 a 14.4, 14.4 1 0,0 -21.6,-14.4 a 14.4,14.4 1 0,0 -50.4,14.4 z"
+        )
+        .attr("style", "stroke: black; stroke-width:2; fill:white;");
+
+      svg
+        .append("path")
+        .attr(
+          "d",
+          "M 380,78 a 28.8,28.8 1 0,0 0,57.6 h 67.2 a 28.8,28.8 1 0,0 0,-57.6 a 14.4, 14.4 1 0,0 -21.6,-14.4 a 14.4,14.4 1 0,0 -50.4,14.4 z"
+        )
+        .attr("style", "stroke: black; stroke-width:2; fill:white;");
+
+      svg
+        .append("path")
+        .attr(
+          "d",
+          "M 820, 42 a 30.24,30.24 1 0,0 0,60.48 h 70.56 a 30.24,30.24 1 0,0 0,-60.48 a 15.12, 15.12 1 0,0 -22.68,-15.12 a 15.12,15.12 1 0,0 -52.92,15.12 z"
+        )
+        .attr("style", "stroke: black; stroke-width:2; fill:white;");
+    </script>
+  </body>
 </html>
