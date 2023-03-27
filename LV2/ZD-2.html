@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    
+
+<script>
+    
+fetch("./dataset.json").then(response => response.json())
+.then(data => {
+    var years = [];
+    var averageAges = [];
+    
+    data.forEach(element => {
+        years.push(element.godina);
+        averageAges.push(element.ukupno);
+    });
+
+    var margin = {top: 20, bottom: 70, left:75, right: 50};
+    var width = 680 - margin.left - margin.right;
+    var height = 680 - margin.top - margin.bottom;
+    var barPadding = 5;
+    var barWidth = width/years.length - barPadding;
+    
+    var x = d3.scale.ordinal()
+        .domain(d3.range(averageAges.length))
+        .rangeRoundBands([0, width]);
+
+    var y = d3.scale.linear()
+        .domain([d3.min(averageAges)-2, d3.max(averageAges)+1])
+        .range([height, 20]);
+    
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.bottom + margin.top)
+        .style("background-color", "rgb(232, 234, 237)")
+        .append("g")
+        .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
+    
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .tickFormat(function(d, i) { return years[i]; });
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left").ticks(20);
+        
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+    
+    var barchart2 = svg.selectAll("rect")
+        .data(averageAges)
+        .enter()
+        .append("rect")
+        .attr("x", function(d, i) { return x(i); })
+        .attr("y", function(d, i) { return y(d);}).attr("height", function(d, i) { return height - y(d); })
+        .attr("width", barWidth)
+        .attr("fill", "rgb(0, 122, 204)");
+    
+    svg.selectAll("p")
+        .data(averageAges)
+        .enter()
+        .append("text")
+        .attr("x", function(d, i) { return x(i) + barWidth/3; })
+        .attr("y", function(d, i) { return y(d) -10;}).text(function(d, i) { return d; })
+        .attr("width", barWidth)
+        .attr("fill",  "black");
+
+        
+});
+
+
+</script>
+</body>
+</html>
