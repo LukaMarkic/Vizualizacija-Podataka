@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      fetch("./dataset.json")
+        .then((response) => response.json())
+        .then((data) => {
+          var years = [];
+          var averageAges = [];
+          var maleAverageAges = [];
+          var femaleAverageAges = [];
+
+          data.forEach((element) => {
+            years.push(element.godina);
+            averageAges.push(element.ukupno);
+            maleAverageAges.push(element.muskarci);
+            femaleAverageAges.push(element.zene);
+          });
+
+          var colors = ["#3dd422", "#2e92f0", "#ed3232"];
+          var margin = { top: 70, bottom: 150, left: 75, right: 50 };
+          var width = 680 - margin.left - margin.right;
+          var height = 700 - margin.top - margin.bottom;
+
+          var x = d3.scale
+            .ordinal()
+            .domain(d3.range(averageAges.length))
+            .rangeRoundBands([0, width]);
+
+          var yMean = d3.scale
+            .linear()
+            .domain([d3.min(averageAges) - 2, d3.max(averageAges) + 1])
+            .range([height, 20]);
+
+          var yMale = d3.scale
+            .linear()
+            .domain([d3.min(maleAverageAges) - 2, d3.max(maleAverageAges) + 1])
+            .range([height, 20]);
+
+          var yFemale = d3.scale
+            .linear()
+            .domain([
+              d3.min(femaleAverageAges) - 2,
+              d3.max(femaleAverageAges) + 1,
+            ])
+            .range([height, 20]);
+
+          var svg = d3
+            .select("body")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.bottom + margin.top)
+            .style("background-color", "rgb(232, 234, 237)")
+            .append("g")
+            .attr(
+              "transform",
+              "translate(" + margin.left + "," + margin.top + ")"
+            );
+
+          var xAxis = d3.svg
+            .axis()
+            .scale(x)
+            .orient("bottom")
+            .tickFormat(function (d, i) {
+              return years[i];
+            });
+
+          var yAxis = d3.svg.axis().scale(yMean).orient("left").ticks(20);
+
+          //x-axis
+          svg
+            .append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis)
+            .append("text")
+            .text("Godina popisa stanovništa")
+            .attr("style", "font-size: 18; font-weight: bold")
+            .attr("dy", "3em")
+            .attr("x", width / 4 + 20)
+            .selectAll("text")
+            .style("text-anchor", "middle");
+
+          //y-axis
+          svg
+            .append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0)
+            .attr("x", -(height / 3))
+            .attr("dy", "-2.5em")
+            .attr("style", "font-size: 18; font-weight: bold")
+            .style("text-anchor", "end")
+            .text("Prosječna starost stanovništva");
+
+          //Title
+          svg
+            .append("text")
+            .attr("x", width / 2)
+            .attr("y", -5 - margin.top / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "1.4em")
+            .text("Prosječna starost stanovništa prema ");
+
+          svg
+            .append("text")
+            .attr("x", width / 2)
+            .attr("y", -5 - margin.top / 2)
+            .attr("dy", "1.4em")
+            .attr("text-anchor", "middle")
+            .style("font-size", "1.4em")
+            .text("godinama popisa stanovništva");
+
+          for (let idx = 0; idx < 3; idx++) {
+            let spaceBetween = 20;
+            let description = [
+              "Središnja vrijednost",
+              "Starost muškarca",
+              "Starost žena",
+            ];
+
+            //Legend
+            svg
+              .append("text")
+              .attr("x", margin.left / 4 + 5)
+              .attr("y", height + margin.bottom / 2 + 10 + spaceBetween * idx)
+              .attr("text-anchor", "start")
+              .style("font-size", "1.4em")
+              .text(description[idx])
+              .attr("style", "color: " + colors[idx] + ";");
+
+            svg
+              .append("line")
+              .attr("x1", margin.left / 4 - 20)
+              .attr("y1", height + margin.bottom / 2 + 5 + spaceBetween * idx)
+              .attr("x2", margin.left / 4)
+              .attr("y2", height + margin.bottom / 2 + 5 + spaceBetween * idx)
+              .attr(
+                "style",
+                " stroke: " + colors[idx] + "; stroke-width: 2px; fill: blue;"
+              );
+
+            //Line chart
+            let allAverageAges = [
+              averageAges,
+              maleAverageAges,
+              femaleAverageAges,
+            ];
+            var valuelineAverageYearMean = d3.svg
+              .line()
+              .x(function (d, i) {
+                return x(i);
+              })
+              .y(function (d) {
+                return idx == 0 ? yMean(d) : idx == 1 ? yMale(d) : yFemale(d);
+              });
+
+            var linechart = svg
+              .append("path")
+              .attr("class", "line")
+              .attr("d", valuelineAverageYearMean(allAverageAges[idx]))
+              .style("stroke", colors[idx])
+              .style("fill", "none");
+          }
+        });
+    </script>
+  </body>
+</html>
