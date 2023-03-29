@@ -25,8 +25,6 @@
             averageAges.push(element.ukupno);
           });
 
-          //console.log(averageAges);
-
           var margin = { top: 70, bottom: 70, left: 75, right: 50 };
           var width = 680 - margin.left - margin.right;
           var height = 700 - margin.top - margin.bottom;
@@ -39,13 +37,13 @@
             .ordinal()
             .domain(averageAges)
             .range([
-              "#4f0216",
-              "#b80733",
-              "#ab0532",
-              "#0d4fbd",
+              "#07498f",
+              "#0757ad",
               "#4073c9",
+              "#2a81de",
               "#13bf16",
               "#5ce05e",
+              "#32ed45",
               "#91eb67",
               "#e7eb1c",
               "#f4f75c",
@@ -58,7 +56,7 @@
 
           var y = d3.scale
             .linear()
-            .domain([d3.min(averageAges) - 2, d3.max(averageAges) + 1])
+            .domain([0, d3.max(averageAges) + 5])
             .range([height, 20]);
 
           var svg = d3
@@ -66,7 +64,7 @@
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.bottom + margin.top)
-            .style("background-color", "rgb(232, 234, 237)")
+            .style("background-color", "#fcfcfc")
             .append("g")
             .attr(
               "transform",
@@ -108,6 +106,7 @@
             .style("text-anchor", "end")
             .text("Prosječna starost stanovništva");
 
+          //Title
           svg
             .append("text")
             .attr("x", width / 2)
@@ -124,8 +123,6 @@
             .attr("text-anchor", "middle")
             .style("font-size", "1.4em")
             .text("godinama popisa stanovništva");
-
-          //averageAges.forEach(element => console.log(y(element)));
 
           var barchart2 = svg
             .selectAll("rect")

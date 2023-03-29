@@ -41,20 +41,17 @@
 
           var yMean = d3.scale
             .linear()
-            .domain([d3.min(averageAges) - 2, d3.max(averageAges) + 1])
+            .domain([0, d3.max(averageAges) + 5])
             .range([height, 20]);
 
           var yMale = d3.scale
             .linear()
-            .domain([d3.min(maleAverageAges) - 2, d3.max(maleAverageAges) + 1])
+            .domain([0, d3.max(averageAges) + 5])
             .range([height, 20]);
 
           var yFemale = d3.scale
             .linear()
-            .domain([
-              d3.min(femaleAverageAges) - 2,
-              d3.max(femaleAverageAges) + 1,
-            ])
+            .domain([0, d3.max(averageAges) + 5])
             .range([height, 20]);
 
           var svg = d3
@@ -62,7 +59,7 @@
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.bottom + margin.top)
-            .style("background-color", "rgb(232, 234, 237)")
+            .style("background-color", "#fcfcfc")
             .append("g")
             .attr(
               "transform",

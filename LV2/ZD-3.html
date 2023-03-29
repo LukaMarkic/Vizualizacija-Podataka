@@ -20,11 +20,9 @@
             averageAges.push(element.ukupno);
           });
 
-          //console.log(averageAges);
-
-          var margin = { top: 20, bottom: 70, left: 75, right: 50 };
+          var margin = { top: 70, bottom: 70, left: 75, right: 50 };
           var width = 680 - margin.left - margin.right;
-          var height = 680 - margin.top - margin.bottom;
+          var height = 700 - margin.top - margin.bottom;
           var barPadding = 5;
           var barWidth = width / years.length - barPadding;
 
@@ -35,7 +33,7 @@
 
           var y = d3.scale
             .linear()
-            .domain([d3.min(averageAges) - 2, d3.max(averageAges) + 1])
+            .domain([0, d3.max(averageAges) + 5])
             .range([height, 20]);
 
           var svg = d3
@@ -43,7 +41,7 @@
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.bottom + margin.top)
-            .style("background-color", "rgb(232, 234, 237)")
+            .style("background-color", "#fcfcfc")
             .append("g")
             .attr(
               "transform",
@@ -85,7 +83,23 @@
             .style("text-anchor", "end")
             .text("Prosječna starost stanovništva");
 
-          //averageAges.forEach(element => console.log(y(element)));
+          //Title
+          svg
+            .append("text")
+            .attr("x", width / 2)
+            .attr("y", -5 - margin.top / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "1.4em")
+            .text("Prosječna starost stanovništa prema ");
+
+          svg
+            .append("text")
+            .attr("x", width / 2)
+            .attr("y", -5 - margin.top / 2)
+            .attr("dy", "1.4em")
+            .attr("text-anchor", "middle")
+            .style("font-size", "1.4em")
+            .text("godinama popisa stanovništva");
 
           var barchart2 = svg
             .selectAll("rect")
@@ -122,7 +136,6 @@
             .attr("fill", "black");
         });
 
-      //attr("fill", function(d) { return color(d)});
     </script>
   </body>
 </html>
