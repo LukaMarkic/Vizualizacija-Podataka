@@ -9,7 +9,7 @@
   </head>
   <body>
     <script>
-      var width = 820;
+      var width = 700;
       var height = 720;
       var svg = d3
         .select("body")
@@ -59,7 +59,7 @@
           .attr("stroke-opacity", "1")
           .transition()
           .ease(d3.easeCubicInOut)
-          .attr("r", "250")
+          .attr("r", width / 2)
           .attr("fill-opacity", "0")
           .attr("stroke-opacity", "0")
           .remove()
