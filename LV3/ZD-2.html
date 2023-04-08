@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>Zadatak 2.</title>
+  </head>
+  <body>
+    <script>
+      var width = 820;
+      var height = 720;
+      var svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+      async function update() {
+        var data = d3.range(10).map(function () {
+          return {
+            x: 100 + Math.random() * 400,
+            y: 100 + Math.random() * 350,
+            radius: 10 + Math.random() * 50,
+            delay: 100 + Math.random() * 2900,
+            duration: 1000 + Math.random() * 4900,
+          };
+        });
+        //pridruzivanje podataka te ujedno i update odabir
+        var circles = svg
+          .selectAll("circle")
+          .data(data)
+          .enter()
+          .append("circle")
+          .attr("cx", function (d) {
+            return d.x;
+          })
+          .attr("cy", function (d) {
+            return d.y;
+          })
+          .attr("r", function (d) {
+            return d.radius;
+          })
+          .attr("fill", "transparent")
+          .attr("style", "stroke: rgb(29, 149, 209); stroke-width: 2;");
+        //enter odabir - dodavanje novih elemenata nakon kojega slijedi
+
+        await circles
+          .transition()
+          .delay(function (d) {
+            return d.delay;
+          })
+          .duration(function (d) {
+            return d.duration;
+          })
+          .attr("fill", "rgb(29, 149, 209)")
+          .attr("fill-opacity", "1")
+          .attr("stroke-opacity", "1")
+          .transition()
+          .ease(d3.easeCubicInOut)
+          .attr("r", "250")
+          .attr("fill-opacity", "0")
+          .attr("stroke-opacity", "0")
+          .remove()
+          .end();
+
+        update();
+      }
+
+      update();
+    </script>
+  </body>
+</html>
