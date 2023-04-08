@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>Zadatak 2.</title>
+  </head>
+  <body>
+    <script>
+      var widthSVG = 500;
+      var heighSVG = 600;
+      var widthRect = 194;
+      var heightRect = 120;
+
+      var svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", widthSVG)
+        .attr("height", heighSVG);
+
+      var rectangle = svg
+        .append("rect")
+        .attr("x", "0")
+        .attr("y", "0")
+        .attr("width", widthRect)
+        .attr("height", heightRect)
+        .attr("fill", "rgb(29, 149, 209)")
+        .attr("style", "stroke: rgb(94, 111, 138); stroke-width: 2;");
+
+      var firstTransition = rectangle
+        .transition()
+        .delay(1000)
+        .duration(1000)
+        .attr("transform", `translate(${widthSVG - widthRect},0)`);
+
+      var secondTransition = firstTransition
+        .transition()
+        .delay(1000)
+        .duration(1000)
+        .attr(
+          "transform",
+          `translate(${widthSVG - widthRect}, ${heighSVG - widthRect})`
+        );
+    </script>
+  </body>
+</html>
