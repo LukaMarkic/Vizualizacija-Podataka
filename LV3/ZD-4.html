@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <title>Zadatak 4.</title>
+  </head>
+  <body>
+    <script>
+      var width = 620;
+      var height = 600;
+      var svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+      //Solid
+      var circle = svg
+        .append("circle")
+        .attr("cx", "200")
+        .attr("cy", "120")
+        .attr("r", "35")
+        .attr("fill", "rgb(29, 149, 209)")
+        .attr("style", "stroke: rgb(29, 149, 209); stroke-width: 2;");
+
+      var firstTransition = circle
+        .transition()
+        .delay(1000)
+        .duration(980)
+        .ease(d3.easeBounceOut)
+        .attr("cx", "200")
+        .attr("cy", "500");
+
+      var rect = svg
+        .append("rect")
+        .attr("x", "140")
+        .attr("y", "536.5")
+        .attr("width", "120")
+        .attr("height", "40")
+        .attr("fill", "rgb(171, 179, 173)")
+        .attr("style", "stroke: rgb(156, 161, 157); stroke-width: 1;");
+
+      //Elastic
+
+      var circleRect = svg
+        .append("rect")
+        .attr("x", "320")
+        .attr("y", "536.5")
+        .attr("width", "120")
+        .attr("height", "40")
+        .attr("fill", "rgb(102, 237, 140)")
+        .attr("style", "stroke: rgb(156, 161, 157); stroke-width: 1;");
+
+      var circleElastic = svg
+        .append("circle")
+        .attr("cx", "380")
+        .attr("cy", "120")
+        .attr("r", "30")
+        .attr("fill", "rgb(29, 149, 209)")
+        .attr("style", "stroke: rgb(29, 149, 209); stroke-width: 2;");
+
+      var firstCircleTransition = circleElastic
+        .transition()
+        .delay(1000)
+        .duration(980)
+        .ease(d3.easeElasticOut.period(0.9))
+        .attr("cx", "380")
+        .attr("cy", "510");
+
+      circleRect
+        .transition()
+        .delay(1205)
+        .duration(100)
+        .attr("transform", "translate (0, 32)")
+        .attr("height", "10")
+        .attr("width", "130")
+        .transition()
+        .attr("transform", "translate (0, 5)")
+        .delay(200)
+        .attr("height", "35")
+        .attr("width", "121");
+      //Fluid
+
+      var circle = svg
+        .append("circle")
+        .attr("cx", "560")
+        .attr("cy", "120")
+        .attr("r", "30")
+        .attr("fill", "rgb(29, 149, 209)")
+        .attr("style", "stroke: rgb(29, 149, 209); stroke-width: 2;");
+
+      var firstTransition = circle
+        .transition()
+        .delay(1000)
+        .duration(400)
+        .ease(d3.easeLinear)
+        .attr("cx", "560")
+        .attr("cy", "510");
+
+      var secondTransition = firstTransition
+        .transition()
+        .delay(0)
+        .duration(380)
+        .ease(d3.easePolyInOut)
+        .attr("cx", "560")
+        .attr("cy", "540");
+
+      var rect = svg
+        .append("rect")
+        .attr("x", "500")
+        .attr("y", "536.5")
+        .attr("width", "120")
+        .attr("height", "40")
+        .attr("fill", "rgb(111, 160, 237)")
+        .attr("fill-opacity", "0.3")
+        .attr("style", "stroke: rgb(156, 161, 157); stroke-width: 1;");
+      dataset = [
+        {
+          metric: "Solid",
+          x: 180,
+        },
+
+        {
+          metric: "Elastic",
+          x: 360,
+        },
+
+        {
+          metric: "Fluid",
+          x: 540,
+        },
+      ];
+      svg
+        .selectAll("text")
+        .data(dataset)
+        .enter()
+        .append("text")
+        .text(function (d) {
+          return d.metric;
+        })
+        .attr("x", function (d, i) {
+          return d.x;
+        })
+        .attr("y", function (d, i) {
+          return 570;
+        })
+        .attr("font-size", 14);
+    </script>
+  </body>
+</html>
