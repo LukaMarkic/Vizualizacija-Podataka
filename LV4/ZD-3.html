@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <title>Zadatak 3.</title>
+  </head>
+  <body>
+    <script>
+      var width = 600;
+      var height = 600;
+      var outerRadius = 200;
+      var innerRadius = 0;
+      var color = d3.scale.category20();
+      let distanceFromChart = 10;
+
+      var arc = d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius);
+
+      var data = [
+        { name: "jabuka", value: 53 },
+        { name: "kruska", value: 12 },
+        { name: "banana", value: 4 },
+        { name: "jagoda", value: 1 },
+        { name: "ribizla", value: 2 },
+      ];
+
+      var pie = d3.layout.pie().value(function (d) {
+        return d.value;
+      });
+
+      var pieData = pie(data);
+
+      var svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+      var pieArcs = svg
+        .selectAll("g.pie")
+        .data(pieData)
+        .enter()
+        .append("g")
+        .attr("class", "pie")
+        .attr("transform", "translate(" + width / 2 + ", " + height / 2 + ")")
+        .on("click", function (d) {
+          console.log(`Naziv: ${d.data.name}, kolicina: ${d.value}.`);
+        });
+
+      pieArcs
+        .append("path")
+        .attr("fill", function (d, i) {
+          return color(i);
+        })
+        .attr("d", arc);
+
+      pieArcs
+        .append("text")
+        .attr("transform", function (d) {
+          return "translate(" + arc.centroid(d) + ")";
+        })
+        .attr("text-anchor", "middle")
+        .text(function (d, i) {
+          return d.value;
+        });
+
+      pieArcs
+        .append("text")
+        .attr("transform", function (d) {
+          return (
+            translateLabels(d, distanceFromChart) +
+            rotateLabels(d.startAngle, d.endAngle)
+          );
+        })
+        .attr("text-anchor", "middle")
+        .text(function (d) {
+          return d.data.name;
+        })
+        .attr("text-anchor", function (d) {
+          return (d.endAngle + d.startAngle) / 2 > Math.PI ? "end" : "start";
+        });
+
+      function translateLabels(d, distanceFromChart) {
+        var c = arc.centroid(d);
+        x = c[0];
+        y = c[1];
+        var h = Math.sqrt(x * x + y * y);
+        return (
+          "translate(" +
+          (x / h) * (outerRadius + distanceFromChart) +
+          "," +
+          (y / h) * (outerRadius + distanceFromChart) +
+          ")"
+        );
+      }
+
+      function rotateLabels(startAngle, endAngle) {
+        let rotation =
+          (startAngle + endAngle) / 2 < Math.PI
+            ? (((startAngle + endAngle) / 2) * 180) / Math.PI
+            : ((startAngle / 2 + endAngle / 2 + Math.PI) * 180) / Math.PI;
+
+        return "rotate(-90) rotate(" + rotation + ")";
+      }
+    </script>
+  </body>
+</html>
